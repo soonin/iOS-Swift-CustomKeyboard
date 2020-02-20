@@ -27,6 +27,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         email.delegate = self
         phone.delegate = self
 
+//        let nextResponder = view.viewWithTag(1)
+//        nextResponder?.becomeFirstResponder()
+        
     }
 
     
@@ -63,9 +66,9 @@ extension UITextField {
         let toolbar : UIToolbar = UIToolbar()
         toolbar.barStyle = .default
         toolbar.items = [
-            UIBarButtonItem(title: "Next", style: .plain, target: onCancel.target, action: onCancel.action),
+            UIBarButtonItem(title: "Cancel", style: .plain, target: onCancel.target, action: onCancel.action),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-            UIBarButtonItem(title: "Cancel", style: .done, target: onDone.target, action: onDone.action)
+            UIBarButtonItem(title: "Done", style: .done, target: onDone.target, action: onDone.action)
         ]
         toolbar.sizeToFit()
         self.inputAccessoryView = toolbar
