@@ -12,11 +12,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var text:UITextField!
     @IBOutlet weak var number:UITextField!{
-        didSet { number?.addDoneCancelToolbar()}
+        didSet { number?.addDoneNextToolbar()}
     }
     @IBOutlet weak var email:UITextField!
     @IBOutlet weak var phone:UITextField!{
-        didSet { phone?.addDoneCancelToolbar()}
+        didSet { phone?.addDoneNextToolbar()}
     }
 
     override func viewDidLoad() {
@@ -39,18 +39,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
 //    }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        //textField.resignFirstResponder()
 
-//        let textTag = textField.tag+1
-//        let nextResponder = textField.superview?.superview?.viewWithTag(textTag)
-//        if(nextResponder != nil)
-//        {
-//            nextResponder?.becomeFirstResponder()
-//        }
-//        else{
+        let textTag = textField.tag+1
+        let nextResponder = textField.superview?.superview?.viewWithTag(textTag)
+        if(nextResponder != nil)
+        {
+            nextResponder?.becomeFirstResponder()
+        }
+        else{
 //            // stop editing on pressing the done button on the last text field.
-//            self.view.endEditing(true)
-//        }
+           self.view.endEditing(true)
+        }
         return true
     }
     
@@ -59,14 +59,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
 extension UITextField {
     
-    func addDoneCancelToolbar(onDone: (target: Any, action: Selector)? = nil, onCancel: (target: Any, action: Selector)? = nil) {
-        let onCancel = onCancel ?? (target: self, action: #selector(cancelButtonTapped))
+    func addDoneNextToolbar(onDone: (target: Any, action: Selector)? = nil, onNext: (target: Any, action: Selector)? = nil) {
+        let onNext = onNext ?? (target: self, action: #selector(NextButtonTapped))
         let onDone = onDone ?? (target: self, action: #selector(doneButtonTapped))
         
         let toolbar : UIToolbar = UIToolbar()
         toolbar.barStyle = .default
         toolbar.items = [
-            UIBarButtonItem(title: "Cancel", style: .plain, target: onCancel.target, action: onCancel.action),
+            UIBarButtonItem(title: "Next", style: .plain, target: onNext.target, action: onNext.action),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
             UIBarButtonItem(title: "Done", style: .done, target: onDone.target, action: onDone.action)
         ]
@@ -75,22 +75,21 @@ extension UITextField {
     }
     
     //Defualt actions :
-    @objc func cancelButtonTapped() {
+    @objc func NextButtonTapped() {
         self.resignFirstResponder()
 
-//        let textTag = self.tag+1
-//        let nextResponder = self.superview?.superview?.viewWithTag(textTag)
-//        if(nextResponder != nil)
-//        {
-//            //textField.resignFirstResponder()
-//            nextResponder?.becomeFirstResponder()
-//        }
-//        else{
-//            // stop editing on pressing the done button on the last text field.
-//
-//            self.endEditing(true)
-//        }
-//        return
+        let textTag = self.tag+1
+        let nextResponder = self.superview?.superview?.viewWithTag(textTag)
+        if(nextResponder != nil)
+        {
+            //textField.resignFirstResponder()
+            nextResponder?.becomeFirstResponder()
+        }
+        else{
+            // stop editing on pressing the done button on the last text field.
+            self.endEditing(true)
+        }
+        return
     }
     @objc func doneButtonTapped() { self.resignFirstResponder()}
 
